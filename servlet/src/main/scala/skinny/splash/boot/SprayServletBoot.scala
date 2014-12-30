@@ -12,7 +12,7 @@ trait SprayServletBoot extends WebBoot {
   /**
    * Props of SprayDispatcherActor.
    */
-  def dispatcherProps: Props
+  def dispatcherActorProps: Props
 
   def actorSystemName: String = "skinny-spray-application"
 
@@ -28,6 +28,6 @@ trait SprayServletBoot extends WebBoot {
 
   def actorOf(props: Props): ActorRef = system.actorOf(props)
 
-  override def serviceActor: ActorRef = actorOf(dispatcherProps)
+  override def serviceActor: ActorRef = actorOf(dispatcherActorProps)
 
 }

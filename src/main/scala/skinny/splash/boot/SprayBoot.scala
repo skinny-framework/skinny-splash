@@ -17,7 +17,7 @@ trait SprayBoot {
   /**
    * Props of SprayDispatcherActor.
    */
-  def dispatcherProps: Props
+  def dispatcherActorProps: Props
 
   def actorSystemName: String = "skinny-spray-application"
 
@@ -43,7 +43,7 @@ trait SprayBoot {
     implicit val timeout = Timeout(timeoutSeconds.seconds)
 
     val httpBind = Http.Bind(
-      listener = actorOf(dispatcherProps),
+      listener = actorOf(dispatcherActorProps),
       interface = interface,
       port = port
     )

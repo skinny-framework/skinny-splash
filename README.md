@@ -23,7 +23,7 @@ libraryDependencies ++= Seq(
   "io.spray"             %% "spray-can"     % "1.3.2",
   "io.spray"             %% "spray-routing" % "1.3.2",
   "io.spray"             %% "spray-json"    % "1.3.1"
-  "org.skinny-framework" %% "skinny-splash" % "0.1"
+  "org.skinny-framework" %% "skinny-splash" % "0.1.+"
 )
 ```
 
@@ -60,7 +60,7 @@ class MyDispatcherActor
   with MyDispatcher
 
 object MyApp extends SprayApplication {
-  def dispatcherProps = toProps(classOf[MyDispatcherActor])
+  def dispatcherActorProps = toProps(classOf[MyDispatcherActor])
 }
 ```
 
@@ -72,7 +72,7 @@ object MyApp extends SprayApplication {
 Additionally, `skinny-splash-servlet` is also required.
 
 ```scala
-libraryDependencies += "org.skinny-framework" %% "skinny-splash-servlet" % "0.1"
+libraryDependencies += "org.skinny-framework" %% "skinny-splash-servlet" % "0.1.+"
 ```
 
 #### Example Code
@@ -101,7 +101,7 @@ class ApiDispatcherActor
   with ApiDispatcher
 
 class ApiBoot extends SprayServletBoot {
-  override def dispatcherProps = toProps(classOf[ApiDispatcherActor])
+  override def dispatcherActorProps = toProps(classOf[ApiDispatcherActor])
 }
 ```
 
