@@ -2,7 +2,7 @@
 // common settings
 // -----------------------
 
-lazy val releaseVersion = "0.1"
+lazy val releaseVersion = "0.1.1"
 lazy val skinnyVersion = "1.3.8"
 lazy val skinnyOrg = "org.skinny-framework"
 
