@@ -1,7 +1,6 @@
 package skinny.splash.dispatcher
 
-import skinny.splash.{ SprayResponse, SprayRequest }
-import skinny.splash.controller.SprayController
+import skinny.splash.{ SprayAction, SprayResponse, SprayRequest }
 import skinny.splash.json.SprayJsonFormats
 import spray.http._
 import spray.routing._
@@ -10,17 +9,11 @@ import spray.routing._
  * A full-stack dispatcher base implementation for Spray HTTP server.
  */
 trait SprayDispatcher
-    extends HttpServiceActor
+    extends HttpService
     with SprayRoutes
     with SprayJsonFormats {
 
   // TODO path params
-
-  override def actorRefFactory = context
-
-  override def receive: Receive = runRoute(composedRoutes)
-
-  type ControllerFactory = (SprayRequest) => SprayController
 
   def defaultMediaType: MediaType = MediaTypes.`application/json`
 
@@ -28,14 +21,13 @@ trait SprayDispatcher
 
   // TODO: multipart form data
 
-  def route(pathValue: String)(controllerFactory: ControllerFactory): Route = {
-    path(pathValue) { ctx =>
+  def route(pathValue: String)(action: SprayAction): Route = {
+    path(pathValue) { implicit ctx =>
       parameterMultiMap { multiParams =>
         entity(as[FormData]) { formData =>
           respondWithDefaultMediaType {
-            val req: SprayRequest = buildRequestInRoute(ctx, multiParams, formData)
-            val controller: SprayController = controllerFactory.apply(req)
-            val resp: SprayResponse = controller.apply()
+            implicit val req = createSprayRequest(ctx, multiParams, formData)
+            val resp: SprayResponse = action.apply(req)
             complete(resp.status, resp.allHeaders, resp.body)
           }
         }
@@ -43,43 +35,43 @@ trait SprayDispatcher
     }
   }
 
-  protected def buildRequestInRoute(
-                              ctx: RequestContext,
-                              multiParams: Map[String, List[String]],
-                              formData: FormData) = {
+  def getRoute(pathValue: String)(action: SprayAction): Route = {
+    get(route(pathValue)(action))
+  }
+
+  def postRoute(pathValue: String)(action: SprayAction): Route = {
+    post(route(pathValue)(action))
+  }
+
+  def putRoute(pathValue: String)(action: SprayAction): Route = {
+    put(route(pathValue)(action))
+  }
+
+  def patchRoute(pathValue: String)(action: SprayAction): Route = {
+    patch(route(pathValue)(action))
+  }
+
+  def deleteRoute(pathValue: String)(action: SprayAction): Route = {
+    delete(route(pathValue)(action))
+  }
+
+  def headRoute(pathValue: String)(action: SprayAction): Route = {
+    head(route(pathValue)(action))
+  }
+
+  def optionsRoute(pathValue: String)(action: SprayAction): Route = {
+    options(route(pathValue)(action))
+  }
+
+  protected def createSprayRequest(
+    ctx: RequestContext,
+    multiParams: Map[String, List[String]],
+    formData: FormData): SprayRequest = {
     SprayRequest(
       context = ctx,
       queryMultiParams = multiParams.map { case (k, vs) => (k, vs.toSeq) },
       formMultiParams = formData.fields.groupBy(_._1).map { case (k, vs) => (k, vs.map(_._2)) }
     )
-  }
-
-  def getRoute(pathValue: String)(controllerFactory: ControllerFactory): Route = {
-    get(route(pathValue)(controllerFactory))
-  }
-
-  def postRoute(pathValue: String)(controllerFactory: ControllerFactory): Route = {
-    post(route(pathValue)(controllerFactory))
-  }
-
-  def putRoute(pathValue: String)(controllerFactory: ControllerFactory): Route = {
-    put(route(pathValue)(controllerFactory))
-  }
-
-  def patchRoute(pathValue: String)(controllerFactory: ControllerFactory): Route = {
-    patch(route(pathValue)(controllerFactory))
-  }
-
-  def deleteRoute(pathValue: String)(controllerFactory: ControllerFactory): Route = {
-    delete(route(pathValue)(controllerFactory))
-  }
-
-  def headRoute(pathValue: String)(controllerFactory: ControllerFactory): Route = {
-    head(route(pathValue)(controllerFactory))
-  }
-
-  def optionsRoute(pathValue: String)(controllerFactory: ControllerFactory): Route = {
-    options(route(pathValue)(controllerFactory))
   }
 
 }

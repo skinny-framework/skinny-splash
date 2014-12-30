@@ -8,14 +8,10 @@ trait SprayRoutes { self: HttpService =>
 
   def composedRoutes: Route = {
     routes.size match {
-      case 0 =>
-        throw new IllegalStateException("No route found.")
-      case 1 =>
-        routes.head
+      case 0 => throw new IllegalStateException("No route found.")
       case _ =>
         routes.tail.foldLeft(routes.head) {
-          case (all, route) =>
-            all ~ route
+          case (all, route) => all ~ route
         }
     }
   }

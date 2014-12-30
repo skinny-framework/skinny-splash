@@ -1,9 +1,12 @@
 package sample
 
 import skinny.splash._
+import skinny.splash.dispatcher.SprayDispatcherActor
 
-object MyApp extends SprayApplication[MyDispatcher] {
+object MyApp extends SprayApplication {
 
-  override def dispatcherClass = classOf[MyDispatcher]
+  class MyDispatcherActor extends SprayDispatcherActor with MyDispatcher
+
+  override def dispatcherProps = toProps(classOf[MyDispatcherActor])
 
 }

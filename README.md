@@ -1,6 +1,6 @@
 ## skinny-splash
 
-skinny-splash provides handy APIs for [Spray](http://spray.io/) applications by integrating following [Skinny Framework](http://skinny-framework.org/) components.
+`skinny-splash` provides handy APIs for [Spray](http://spray.io/) applications by integrating following [Skinny Framework](http://skinny-framework.org/) components.
 
 - skinny-validator
 - skinny-json
@@ -10,10 +10,10 @@ skinny-splash provides handy APIs for [Spray](http://spray.io/) applications by 
 
 When you need to build low latency JSON APIs, consider using this library.
 
-- the most developer-friendly framework to build low latency JSON APIs
-- integration with Skinny Framework's existing handy components
+- The most developer-friendly framework to build low latency JSON APIs
+- Integration with Skinny Framework's existing handy components
 
-### How to use
+### Standalone Example
 
 #### build.sbt
 
@@ -27,19 +27,18 @@ libraryDependencies ++= Seq(
 )
 ```
 
-#### Example
+#### Example Code
 
 ```scala
 import skinny.splash._
 import skinny.validator._
 
-// one controller for one endpoint API
-class MyController(req: SprayRequest) extends SprayController(req) {
-  def form = validation(params,
+class MyController extends SprayController {
+  def form(req: SprayRequest) = validation(req,
     paramKey("name") is required
   )
-  override def apply = {
-    if (form.validate()) {
+  def index(implicit req: SprayRequest): SprayResponse = {
+    if (form(req).validate()) {
       val body = toJSONString(Map("message" -> s"Hello, ${params.getOrElse("name", "Anonymous")}"))
       respondAs(body)
     } else {
@@ -48,23 +47,97 @@ class MyController(req: SprayRequest) extends SprayController(req) {
   }
 }
 
-// the dispatcher of this Spray app
-class MyDispatcher extends SprayDispatcher {
-  override def routes = Seq(
-    getRoute("")(req => new MyController(req)),
-    postRoute("post")(req => new MyController(req))
+trait MyDispatcher extends SprayDispatcher {
+  val myController = new MyController
+  def routes = Seq(
+    getRoute("")(implicit req => myController.index),
+    postRoute("post")(implicit req => myController.index)
   )
 }
 
-// standalone app (can boot with "sbt run")
-object MyApp extends SprayApplication[MyDispatcher] {
-  override def dispatcherClass = classOf[MyDispatcher]
+class MyDispatcherActor
+  extends SprayDispatcherActor
+  with MyDispatcher
+
+object MyApp extends SprayApplication {
+  def dispatcherProps = toProps(classOf[MyDispatcherActor])
 }
 ```
 
-### Servlet Integration
+### Servlet Integration Example
+
+
+#### build.sbt
+
+Additionally, `skinny-splash-servlet` is also required.
 
 ```scala
 libraryDependencies += "org.skinny-framework" %% "skinny-splash-servlet" % "0.1"
 ```
 
+#### Example Code
+
+##### Scala Code
+
+```scala
+package api
+
+import skinny.splash._
+import skinny.splash.boot.SprayServletBoot
+
+trait ApiController extends SprayController {
+  def index(implicit req: SprayRequest) = respondAs("ok")
+}
+
+trait ApiDispatcher extends SprayDispatcher {
+  val controller = new ApiController {}
+  override def routes = Seq(
+    getRoute("ok")(implicit req => controller.index)
+  )
+}
+
+class ApiDispatcherActor
+  extends SprayDispatcherActor
+  with ApiDispatcher
+
+class ApiBoot extends SprayServletBoot {
+  override def dispatcherProps = toProps(classOf[ApiDispatcherActor])
+}
+```
+
+##### src/main/resources/application.conf
+
+```
+spray.servlet {
+  boot-class="api.ApiBoot"
+  root-path="/api"
+}
+```
+
+##### src/main/webapp/WEB-INF/web.xml
+
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns="http://java.sun.com/xml/ns/javaee"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
+         version="3.0">
+
+    <listener>
+        <listener-class>org.scalatra.servlet.ScalatraListener</listener-class>
+    </listener>
+    <listener>
+        <listener-class>spray.servlet.Initializer</listener-class>
+    </listener>
+
+    <servlet>
+        <servlet-name>sprayServlet</servlet-name>
+        <servlet-class>spray.servlet.Servlet30ConnectorServlet</servlet-class>
+        <async-supported>true</async-supported>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>sprayServlet</servlet-name>
+        <url-pattern>/api/*</url-pattern>
+    </servlet-mapping>
+</web-app>
+```

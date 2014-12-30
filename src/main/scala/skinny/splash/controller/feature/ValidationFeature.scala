@@ -3,6 +3,7 @@ package skinny.splash.controller.feature
 import java.util.Locale
 
 import skinny.I18n
+import skinny.splash.SprayRequest
 import skinny.splash.controller.KeyAndErrorMessages
 import skinny.util.StringUtil._
 import skinny.validator._
@@ -13,14 +14,14 @@ trait ValidationFeature { self: RequestScopeFeature with LocaleFeature =>
 
   private[this] val KEY_AND_ERROR_MESSAGES = "validation-key-and-error-messages"
 
-  def validation(params: Map[String, String], validations: NewValidation*)(
-    implicit locale: Locale = currentLocale.orNull[Locale]): MapValidator = {
-    validationWithPrefix(params, null, validations: _*)
+  def validation(currentRequest: SprayRequest, validations: NewValidation*): MapValidator = {
+    validationWithPrefix(currentRequest, null, validations: _*)
   }
 
-  def validationWithPrefix(params: Map[String, String], prefix: String, validations: NewValidation*)(
-    implicit locale: Locale = currentLocale.orNull[Locale]): MapValidator = {
-
+  def validationWithPrefix(currentRequest: SprayRequest, prefix: String, validations: NewValidation*): MapValidator = {
+    implicit val _req: SprayRequest = currentRequest
+    val params = currentRequest.params
+    val locale = currentLocale.orNull[Locale]
     val validator = new MapValidator(params, Validations(params, validations))
 
     validator
@@ -62,12 +63,16 @@ trait ValidationFeature { self: RequestScopeFeature with LocaleFeature =>
     validator
   }
 
-  def errorMessages: Seq[String] = getFromRequestScope(ERROR_MESSAGES).getOrElse {
-    throw new IllegalStateException("No validation errors found.")
+  def errorMessages(implicit currentRequest: SprayRequest): Seq[String] = {
+    getFromRequestScope(ERROR_MESSAGES).getOrElse {
+      throw new IllegalStateException("No validation errors found.")
+    }
   }
 
-  def keyAndErrorMessages: KeyAndErrorMessages = getFromRequestScope(KEY_AND_ERROR_MESSAGES).getOrElse {
-    throw new IllegalStateException("No validation errors found.")
+  def keyAndErrorMessages(implicit currentRequest: SprayRequest): KeyAndErrorMessages = {
+    getFromRequestScope(KEY_AND_ERROR_MESSAGES).getOrElse {
+      throw new IllegalStateException("No validation errors found.")
+    }
   }
 
 }

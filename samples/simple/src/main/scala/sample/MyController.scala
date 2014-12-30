@@ -3,14 +3,14 @@ package sample
 import skinny.splash._
 import skinny.validator._
 
-class MyController(req: SprayRequest) extends SprayController(req) {
+class MyController extends SprayController {
 
-  def form = validation(params,
+  def form(req: SprayRequest) = validation(req,
     paramKey("name") is required
   )
 
-  override def apply = {
-    if (form.validate()) {
+  def index(implicit req: SprayRequest) = {
+    if (form(req).validate()) {
       val body = toJSONString(Map("message" -> s"Hello, ${params.getOrElse("name", "Anonymous")}"))
       respondAs(body)
     } else {

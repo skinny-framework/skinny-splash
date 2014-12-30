@@ -4,7 +4,7 @@ import java.util.Locale
 import spray.http.{ Rendering, HttpHeader, StatusCode, StatusCodes }
 
 case class SprayResponse(
-    status: StatusCode = StatusCodes.Created,
+    status: StatusCode = StatusCodes.OK,
     headers: Seq[HttpHeader] = Nil,
     body: String = null) {
 

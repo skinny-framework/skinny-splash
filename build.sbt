@@ -1,6 +1,11 @@
+// -----------------------
+// common settings
+// -----------------------
+
 lazy val releaseVersion = "0.1"
 lazy val skinnyVersion = "1.3.8"
 lazy val skinnyOrg = "org.skinny-framework"
+
 lazy val skinnyDeps = Seq(
   skinnyOrg %% "skinny-common"    % skinnyVersion % "compile",
   skinnyOrg %% "skinny-json"      % skinnyVersion % "compile",
@@ -11,6 +16,16 @@ lazy val sprayDeps = Seq(
   "io.spray"          %% "spray-can"     % "1.3.2" % "compile",
   "io.spray"          %% "spray-routing" % "1.3.2" % "compile",
   "io.spray"          %% "spray-json"    % "1.3.1" % "compile"
+)
+lazy val logbackDeps = Seq(
+  "ch.qos.logback" % "logback-classic" % "1.1.2"
+)
+lazy val logbackTestDeps = Seq(
+  "ch.qos.logback" % "logback-classic" % "1.1.2" % "test"
+)
+lazy val sprayTestDeps = Seq(
+  "io.spray"          %% "spray-testkit" % "1.3.2" % "test",
+  "org.scalatest"     %% "scalatest"     % "2.2.3" % "test"
 )
 lazy val sprayServletDeps = Seq(
   "io.spray"          %% "spray-servlet" % "1.3.2" % "compile"
@@ -27,7 +42,7 @@ lazy val baseSettings = Seq(
 lazy val librarySettings = Seq(
   organization := skinnyOrg,
   version := releaseVersion,
-  crossScalaVersions := Seq("2.10.4", "2.11.4"),
+  crossScalaVersions := Seq("2.11.4"),
   publishTo <<= version { (v: String) => 
     val nexus = "https://oss.sonatype.org/"
     if (v.trim.endsWith("SNAPSHOT")) Some("snapshots" at nexus + "content/repositories/snapshots")
@@ -56,28 +71,43 @@ lazy val librarySettings = Seq(
   </developers>
 )
 
-lazy val skinnySpray = (project in file(".")).settings(baseSettings: _*).settings(librarySettings: _*).settings(
+// -----------------------
+// library
+// -----------------------
+
+lazy val skinnySplash = (project in file(".")).settings(baseSettings: _*).settings(librarySettings: _*).settings(
   name := "skinny-spray",
-  libraryDependencies ++= sprayDeps ++ skinnyDeps
+  libraryDependencies ++= sprayDeps ++ skinnyDeps ++ sprayTestDeps ++ logbackTestDeps
 ).settings(scalariformSettings: _*)
  .settings(sonatypeSettings: _*)
 
-lazy val skinnySprayServlet = (project in file("servlet")).settings(baseSettings: _*).settings(librarySettings: _*).settings(
+lazy val skinnySplashServlet = (project in file("servlet")).settings(baseSettings: _*).settings(librarySettings: _*).settings(
   name := "skinny-spray-servlet",
-  libraryDependencies ++= sprayDeps ++ skinnyDeps ++ sprayServletDeps
-).dependsOn(skinnySpray)
+  libraryDependencies ++= sprayDeps ++ skinnyDeps ++ sprayServletDeps ++ sprayTestDeps ++ logbackTestDeps
+).dependsOn(skinnySplash)
  .settings(scalariformSettings: _*)
  .settings(sonatypeSettings: _*)
 
-lazy val simpleSample = (project in file("samples/simple")).settings(baseSettings: _*).settings(
-  libraryDependencies ++= Seq(
-    "ch.qos.logback" % "logback-classic" % "1.1.2"
-  )
-).dependsOn(skinnySpray)
+// -----------------------
+// samples
+// -----------------------
 
-lazy val servletSample = (project in file("samples/servlet")).settings(baseSettings: _*).settings(
-  libraryDependencies ++= Seq(
-    "ch.qos.logback" % "logback-classic" % "1.1.2"
-  )
-).dependsOn(skinnySpray, skinnySprayServlet)
+lazy val simpleSample = (project in file("samples/simple")).settings(baseSettings: _*).settings(
+  libraryDependencies ++= logbackDeps ++ sprayTestDeps
+).dependsOn(skinnySplash)
+ .settings(scalariformSettings: _*)
+
+import org.scalatra.sbt._
+lazy val servletSample = (project in file("samples/servlet"))
+  .settings(baseSettings: _*)
+  .settings(ScalatraPlugin.scalatraWithJRebel: _*)
+  .settings(
+    libraryDependencies ++= logbackDeps ++ sprayTestDeps ++ Seq(
+      skinnyOrg            %% "skinny-framework"  % skinnyVersion,
+      "javax.servlet"      %  "javax.servlet-api" % "3.1.0",
+      "org.eclipse.jetty"  %  "jetty-webapp"      % "9.2.6.v20141205" % "container",
+      "org.eclipse.jetty"  %  "jetty-plus"        % "9.2.6.v20141205" % "container"
+    )
+  ).dependsOn(skinnySplash, skinnySplashServlet)
+   .settings(scalariformSettings: _*)
 

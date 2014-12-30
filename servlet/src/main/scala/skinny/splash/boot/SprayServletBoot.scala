@@ -1,18 +1,13 @@
 package skinny.splash.boot
 
-import akka.actor.{ ActorRef, ActorSystem, Props }
-import akka.io.IO
-import akka.pattern.ask
-import akka.util.Timeout
+import akka.actor._
 import skinny.splash.dispatcher.SprayDispatcherActor
-import spray.can.Http
-
-import scala.concurrent.duration._
+import spray.servlet.WebBoot
 
 /**
- * Standalone Spray Boot
+ * Spray app integration with Servlet.
  */
-trait SprayBoot {
+trait SprayServletBoot extends WebBoot {
 
   /**
    * Props of SprayDispatcherActor.
@@ -33,21 +28,6 @@ trait SprayBoot {
 
   def actorOf(props: Props): ActorRef = system.actorOf(props)
 
-  def interface: String = "0.0.0.0"
-
-  def port: Int = 8080
-
-  def timeoutSeconds: Int = 3
-
-  def run(): Unit = {
-    implicit val timeout = Timeout(timeoutSeconds.seconds)
-
-    val httpBind = Http.Bind(
-      listener = actorOf(dispatcherProps),
-      interface = interface,
-      port = port
-    )
-    IO(Http) ? httpBind
-  }
+  override def serviceActor: ActorRef = actorOf(dispatcherProps)
 
 }

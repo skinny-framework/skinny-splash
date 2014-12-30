@@ -2,11 +2,13 @@ package sample
 
 import skinny.splash._
 
-class MyDispatcher extends SprayDispatcher {
+trait MyDispatcher extends SprayDispatcher {
+
+  val controller = new MyController
 
   override def routes = Seq(
-    getRoute("")(req => new MyController(req)),
-    postRoute("foo")(req => new MyController(req))
+    getRoute("")(implicit req => controller.index),
+    postRoute("foo")(implicit req => controller.index)
   )
 
 }

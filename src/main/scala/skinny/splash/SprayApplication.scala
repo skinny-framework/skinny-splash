@@ -1,7 +1,7 @@
 package skinny.splash
 
-trait SprayApplication[Dispatcher <: SprayDispatcher]
-    extends SprayBoot[Dispatcher]
+trait SprayApplication
+    extends SprayBoot
     with App {
 
   this.run()

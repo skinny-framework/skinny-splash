@@ -9,3 +9,16 @@ addSbtPlugin("org.scoverage"    % "sbt-coveralls"        % "1.0.0.BETA1")
 
 scalacOptions ++= Seq("-unchecked", "-deprecation", "-feature")
 
+// for samples/servlet
+addSbtPlugin("org.scalatra.sbt" % "scalatra-sbt" % "0.3.5" excludeAll(
+  ExclusionRule(organization = "org.mortbay.jetty"),
+  ExclusionRule(organization = "org.eclipse.jetty"),
+  ExclusionRule(organization = "org.apache.tomcat.embed"),
+  ExclusionRule(organization = "com.earldouglas")
+))
+addSbtPlugin("com.earldouglas" % "xsbt-web-plugin" % "0.9.1" excludeAll(
+  ExclusionRule(organization = "org.mortbay.jetty"),
+  ExclusionRule(organization = "org.eclipse.jetty"),
+  ExclusionRule(organization = "org.apache.tomcat.embed")
+))
+
