@@ -4,7 +4,7 @@ import java.util.Locale
 
 import skinny.I18n
 import skinny.splash.SprayRequest
-import skinny.splash.controller.KeyAndErrorMessages
+import skinny.controller.KeyAndErrorMessages
 import skinny.util.StringUtil._
 import skinny.validator._
 

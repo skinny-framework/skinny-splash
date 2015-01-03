@@ -7,6 +7,6 @@ object MyApp extends SprayApplication {
 
   class MyDispatcherActor extends SprayDispatcherActor with MyDispatcher
 
-  override def dispatcherProps = toProps(classOf[MyDispatcherActor])
+  override def dispatcherActorProps = toProps(classOf[MyDispatcherActor])
 
 }
