@@ -76,13 +76,13 @@ lazy val librarySettings = Seq(
 // -----------------------
 
 lazy val skinnySplash = (project in file(".")).settings(baseSettings: _*).settings(librarySettings: _*).settings(
-  name := "skinny-spray",
+  name := "skinny-splash",
   libraryDependencies ++= sprayDeps ++ skinnyDeps ++ sprayTestDeps ++ logbackTestDeps
 ).settings(scalariformSettings: _*)
  .settings(sonatypeSettings: _*)
 
 lazy val skinnySplashServlet = (project in file("servlet")).settings(baseSettings: _*).settings(librarySettings: _*).settings(
-  name := "skinny-spray-servlet",
+  name := "skinny-splash-servlet",
   libraryDependencies ++= sprayDeps ++ skinnyDeps ++ sprayServletDeps ++ sprayTestDeps ++ logbackTestDeps
 ).dependsOn(skinnySplash)
  .settings(scalariformSettings: _*)
