@@ -17,22 +17,17 @@ lazy val sprayDeps = Seq(
   "io.spray"          %% "spray-routing" % "1.3.2" % "compile",
   "io.spray"          %% "spray-json"    % "1.3.1" % "compile"
 )
-lazy val logbackDeps = Seq(
-  "ch.qos.logback" % "logback-classic" % "1.1.2"
-)
-lazy val logbackTestDeps = Seq(
-  "ch.qos.logback" % "logback-classic" % "1.1.2" % "test"
-)
+lazy val sprayServletDeps = Seq("io.spray" %% "spray-servlet" % "1.3.2" % "compile")
 lazy val sprayTestDeps = Seq(
   "io.spray"          %% "spray-testkit" % "1.3.2" % "test",
   "org.scalatest"     %% "scalatest"     % "2.2.3" % "test"
 )
-lazy val sprayServletDeps = Seq(
-  "io.spray"          %% "spray-servlet" % "1.3.2" % "compile"
-)
+
+lazy val logbackDeps = Seq("ch.qos.logback" % "logback-classic" % "1.1.2")
+lazy val logbackTestDeps = Seq("ch.qos.logback" % "logback-classic" % "1.1.2" % "test")
 
 lazy val baseSettings = Seq(
-  scalaVersion := "2.11.4",
+  scalaVersion := "2.11.5",
   transitiveClassifiers in Global := Seq(Artifact.SourceClassifier),
   parallelExecution in Test := false,
   logBuffered in Test := false,
