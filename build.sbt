@@ -3,7 +3,7 @@
 // -----------------------
 
 lazy val releaseVersion = "0.1.3-SNAPSHOT"
-lazy val skinnyVersion = "1.3.10"
+lazy val skinnyVersion = "1.3.11"
 lazy val skinnyOrg = "org.skinny-framework"
 
 lazy val skinnyDeps = Seq(
@@ -12,7 +12,7 @@ lazy val skinnyDeps = Seq(
   skinnyOrg %% "skinny-validator" % skinnyVersion % "compile"
 )
 lazy val sprayDeps = Seq(
-  "com.typesafe.akka" %% "akka-actor"    % "2.3.8" % "compile",
+  "com.typesafe.akka" %% "akka-actor"    % "2.3.9" % "compile",
   "io.spray"          %% "spray-can"     % "1.3.2" % "compile",
   "io.spray"          %% "spray-routing" % "1.3.2" % "compile",
   "io.spray"          %% "spray-json"    % "1.3.1" % "compile"
@@ -20,7 +20,7 @@ lazy val sprayDeps = Seq(
 lazy val sprayServletDeps = Seq("io.spray" %% "spray-servlet" % "1.3.2" % "compile")
 lazy val sprayTestDeps = Seq(
   "io.spray"          %% "spray-testkit" % "1.3.2" % "test",
-  "org.scalatest"     %% "scalatest"     % "2.2.3" % "test"
+  "org.scalatest"     %% "scalatest"     % "2.2.4" % "test"
 )
 
 lazy val logbackDeps = Seq("ch.qos.logback" % "logback-classic" % "1.1.2")
@@ -37,7 +37,7 @@ lazy val baseSettings = Seq(
 lazy val librarySettings = Seq(
   organization := skinnyOrg,
   version := releaseVersion,
-  crossScalaVersions := Seq("2.11.4"),
+  crossScalaVersions := Seq("2.11.5"),
   publishTo <<= version { (v: String) => 
     val nexus = "https://oss.sonatype.org/"
     if (v.trim.endsWith("SNAPSHOT")) Some("snapshots" at nexus + "content/repositories/snapshots")
