@@ -19,7 +19,7 @@ When you need to build low latency JSON APIs, consider using this library.
 
 ```scala
 libraryDependencies ++= Seq(
-  "com.typesafe.akka"    %% "akka-actor"    % "2.3.8",
+  "com.typesafe.akka"    %% "akka-actor"    % "2.3.9",
   "io.spray"             %% "spray-can"     % "1.3.2",
   "io.spray"             %% "spray-routing" % "1.3.2",
   "io.spray"             %% "spray-json"    % "1.3.1"
