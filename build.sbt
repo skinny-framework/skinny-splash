@@ -3,7 +3,8 @@
 // -----------------------
 
 lazy val releaseVersion = "0.1.5-SNAPSHOT"
-lazy val skinnyVersion = "1.3.11"
+lazy val skinnyVersion = "1.3.12"
+lazy val jettyVersion = "9.2.7.v20150116"
 lazy val skinnyOrg = "org.skinny-framework"
 
 lazy val skinnyDeps = Seq(
@@ -100,8 +101,8 @@ lazy val servletSample = (project in file("samples/servlet"))
     libraryDependencies ++= logbackDeps ++ sprayTestDeps ++ Seq(
       skinnyOrg            %% "skinny-framework"  % skinnyVersion,
       "javax.servlet"      %  "javax.servlet-api" % "3.1.0",
-      "org.eclipse.jetty"  %  "jetty-webapp"      % "9.2.6.v20141205" % "container",
-      "org.eclipse.jetty"  %  "jetty-plus"        % "9.2.6.v20141205" % "container"
+      "org.eclipse.jetty"  %  "jetty-webapp"      % jettyVersion % "container",
+      "org.eclipse.jetty"  %  "jetty-plus"        % jettyVersion % "container"
     )
   ).dependsOn(skinnySplash, skinnySplashServlet)
    .settings(scalariformSettings: _*)
