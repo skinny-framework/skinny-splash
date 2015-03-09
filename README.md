@@ -22,7 +22,7 @@ libraryDependencies ++= Seq(
   "com.typesafe.akka"    %% "akka-actor"    % "2.3.9",
   "io.spray"             %% "spray-can"     % "1.3.2",
   "io.spray"             %% "spray-routing" % "1.3.2",
-  "io.spray"             %% "spray-json"    % "1.3.1"
+  "io.spray"             %% "spray-json"    % "1.3.1",
   "org.skinny-framework" %% "skinny-splash" % "0.1.+"
 )
 ```
@@ -63,6 +63,12 @@ object MyApp extends SprayApplication {
   def dispatcherActorProps = toProps(classOf[MyDispatcherActor])
 }
 ```
+
+#### Run
+
+1. `sbt run`
+1. Access to `http://localhost:8080/?name=seratch`  
+Caution : name parameter is required.
 
 ### Servlet Integration Example
 
