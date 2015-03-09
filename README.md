@@ -15,9 +15,10 @@ When you need to build low latency JSON APIs, consider using this library.
 
 ### Standalone Example
 
-#### build.sbt
+##### build.sbt
 
 ```scala
+scalaVersion := "2.11.6"
 libraryDependencies ++= Seq(
   "com.typesafe.akka"    %% "akka-actor"    % "2.3.9",
   "io.spray"             %% "spray-can"     % "1.3.2",
@@ -27,7 +28,13 @@ libraryDependencies ++= Seq(
 )
 ```
 
-#### Example Code
+##### project/build.properties
+
+```properties
+sbt.version=0.13.7
+```
+
+##### src/main/scala/app.scala
 
 ```scala
 import skinny.splash._
@@ -64,11 +71,56 @@ object MyApp extends SprayApplication {
 }
 ```
 
-#### Run
+##### src/main/resources/messages.conf
 
-1. `sbt run`
-1. Access to `http://localhost:8080/?name=seratch`  
-Caution : name parameter is required.
+```
+error {
+  required="{0} is required"
+  notNull="{0} is required"
+  notEmpty="{0} is required"
+  length="{0} length must be {1}"
+  minLength="{0} length must be greater than or equal to {1}"
+  maxLength="{0} length must be less than or equal to {1}"
+  minMaxLength="{0} length must be greater than or equal to {1} or be less than or equal to {2}"
+  numeric="{0} must be numeric"
+  intValue="{0} is less or greater than expected range"
+  longValue="{0} is less or greater than expected range"
+  intMinValue="{0} must be greater than or equal to {1}"
+  intMaxValue="{0} must be less than or equal to {1}"
+  intMinMaxValue="{0} must be greater than or equal to {1} or be less than or equal to {2}"
+  longMinValue="{0} must be greater than or equal to {1}"
+  longMaxValue="{0} must be less than or equal to {1}"
+  longMinMaxValue="{0} must be greater than or equal to {1} or be less than or equal to {2}"
+  dateTimeFormat="{0} must be a datetime value"
+  dateFormat="{0} must be a date value"
+  timeFormat="{0} must be a time value"
+  same="{0} must be the same with {1}"
+  email="{0} must be an e-mail"
+  past="{0} must be in the past"
+}
+
+year="Year"
+month="Month"
+day="Day"
+hour="Hour"
+minute="Minute"
+second="Second"
+
+top="Top"
+backToList="Back to list"
+submit="Submit"
+cancel="Cancel"
+detail="Detail"
+new="New"
+edit="Edit"
+delete="Delete"
+```
+
+#### How to run
+
+- `sbt run`
+- `curl -v localhost:8080`
+- `curl -v localhost:8080?name=seratch`
 
 ### Servlet Integration Example
 
