@@ -2,9 +2,9 @@
 // common settings
 // -----------------------
 
-lazy val releaseVersion = "0.1.6-SNAPSHOT"
-lazy val skinnyVersion = "1.3.13"
-lazy val jettyVersion = "9.2.7.v20150116"
+lazy val releaseVersion = "0.1.6"
+lazy val skinnyVersion = "1.3.15"
+lazy val jettyVersion = "9.2.10.v20150310"
 lazy val skinnyOrg = "org.skinny-framework"
 
 lazy val skinnyDeps = Seq(
@@ -28,7 +28,7 @@ lazy val logbackDeps = Seq("ch.qos.logback" % "logback-classic" % "1.1.2")
 lazy val logbackTestDeps = Seq("ch.qos.logback" % "logback-classic" % "1.1.2" % "test")
 
 lazy val baseSettings = Seq(
-  scalaVersion := "2.11.5",
+  scalaVersion := "2.11.6",
   transitiveClassifiers in Global := Seq(Artifact.SourceClassifier),
   parallelExecution in Test := false,
   logBuffered in Test := false,
@@ -38,7 +38,7 @@ lazy val baseSettings = Seq(
 lazy val librarySettings = Seq(
   organization := skinnyOrg,
   version := releaseVersion,
-  crossScalaVersions := Seq("2.11.5"),
+  crossScalaVersions := Seq("2.11.6"),
   publishTo <<= version { (v: String) => 
     val nexus = "https://oss.sonatype.org/"
     if (v.trim.endsWith("SNAPSHOT")) Some("snapshots" at nexus + "content/repositories/snapshots")
