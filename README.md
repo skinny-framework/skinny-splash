@@ -15,16 +15,26 @@ When you need to build low latency JSON APIs, consider using this library.
 
 ### Standalone Example
 
+`samples/simple` shows you how to build a simple Spray application. Let's try it out as follows.
+
+```
+git clone https://github.com/skinny-framework/skinny-splash.git
+cd skinny-splash
+sbt simpleSample/assembly
+java -jar samples/simple/target/scala-2.11/simpleSample-assembly-0.1-SNAPSHOT.jar
+# curl 'localhost:8080/name=World'
+```
+
 ##### build.sbt
 
 ```scala
 scalaVersion := "2.11.6"
 libraryDependencies ++= Seq(
   "com.typesafe.akka"    %% "akka-actor"    % "2.3.9",
-  "io.spray"             %% "spray-can"     % "1.3.2",
-  "io.spray"             %% "spray-routing" % "1.3.2",
+  "io.spray"             %% "spray-can"     % "1.3.3",
+  "io.spray"             %% "spray-routing" % "1.3.3",
   "io.spray"             %% "spray-json"    % "1.3.1",
-  "org.skinny-framework" %% "skinny-splash" % "0.1.+"
+  "org.skinny-framework" %% "skinny-splash" % "1.0.+"
 )
 ```
 
@@ -130,7 +140,7 @@ delete="Delete"
 Additionally, `skinny-splash-servlet` is also required.
 
 ```scala
-libraryDependencies += "org.skinny-framework" %% "skinny-splash-servlet" % "0.1.+"
+libraryDependencies += "org.skinny-framework" %% "skinny-splash-servlet" % "1.0.+"
 ```
 
 #### Example Code

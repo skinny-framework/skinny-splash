@@ -2,9 +2,10 @@
 // common settings
 // -----------------------
 
-lazy val releaseVersion = "0.1.6"
-lazy val skinnyVersion = "1.3.15"
+lazy val releaseVersion = "1.0.0"
+lazy val skinnyVersion = "1.3.16"
 lazy val jettyVersion = "9.2.10.v20150310"
+lazy val sprayVersion = "1.3.3"
 lazy val skinnyOrg = "org.skinny-framework"
 
 lazy val skinnyDeps = Seq(
@@ -13,18 +14,18 @@ lazy val skinnyDeps = Seq(
   skinnyOrg %% "skinny-validator" % skinnyVersion % "compile"
 )
 lazy val sprayDeps = Seq(
-  "com.typesafe.akka" %% "akka-actor"    % "2.3.9" % "compile",
-  "io.spray"          %% "spray-can"     % "1.3.2" % "compile",
-  "io.spray"          %% "spray-routing" % "1.3.2" % "compile",
-  "io.spray"          %% "spray-json"    % "1.3.1" % "compile"
+  "com.typesafe.akka" %% "akka-actor"    % "2.3.9"      % "compile",
+  "io.spray"          %% "spray-can"     % sprayVersion % "compile",
+  "io.spray"          %% "spray-routing" % sprayVersion % "compile",
+  "io.spray"          %% "spray-json"    % "1.3.1"      % "compile"
 )
 lazy val sprayServletDeps = Seq("io.spray" %% "spray-servlet" % "1.3.2" % "compile")
 lazy val sprayTestDeps = Seq(
-  "io.spray"          %% "spray-testkit" % "1.3.2" % "test",
-  "org.scalatest"     %% "scalatest"     % "2.2.4" % "test"
+  "io.spray"          %% "spray-testkit" % sprayVersion % "test",
+  "org.scalatest"     %% "scalatest"     % "2.2.4"      % "test"
 )
 
-lazy val logbackDeps = Seq("ch.qos.logback" % "logback-classic" % "1.1.2")
+lazy val logbackDeps = Seq("ch.qos.logback" % "logback-classic" % "1.1.3")
 lazy val logbackTestDeps = Seq("ch.qos.logback" % "logback-classic" % "1.1.2" % "test")
 
 lazy val baseSettings = Seq(
@@ -89,6 +90,7 @@ lazy val skinnySplashServlet = (project in file("servlet")).settings(baseSetting
 // -----------------------
 
 lazy val simpleSample = (project in file("samples/simple")).settings(baseSettings: _*).settings(
+  mainClass := Some("sample.MyApp"),
   libraryDependencies ++= logbackDeps ++ sprayTestDeps
 ).dependsOn(skinnySplash)
  .settings(scalariformSettings: _*)
