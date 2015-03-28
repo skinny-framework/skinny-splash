@@ -2,7 +2,7 @@
 // common settings
 // -----------------------
 
-lazy val releaseVersion = "1.0.0"
+lazy val releaseVersion = "1.0.1-SNAPSHOT"
 lazy val skinnyVersion = "1.3.16"
 lazy val jettyVersion = "9.2.10.v20150310"
 lazy val sprayVersion = "1.3.3"
