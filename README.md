@@ -41,7 +41,7 @@ libraryDependencies ++= Seq(
 ##### project/build.properties
 
 ```properties
-sbt.version=0.13.7
+sbt.version=0.13.8
 ```
 
 ##### src/main/scala/app.scala
