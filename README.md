@@ -140,7 +140,7 @@ delete="Delete"
 Additionally, `skinny-splash-servlet` is also required.
 
 ```scala
-libraryDependencies += "org.skinny-framework" %% "skinny-splash-servlet" % "1.0.+"
+libraryDependencies += "org.skinny-framework" %% "skinny-splash-servlet" % "1.1.+"
 ```
 
 #### Example Code
