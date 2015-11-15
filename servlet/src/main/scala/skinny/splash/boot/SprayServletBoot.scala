@@ -19,7 +19,7 @@ trait SprayServletBoot extends WebBoot {
   lazy implicit val system: ActorSystem = {
     val system = ActorSystem(actorSystemName)
     system.registerOnTermination {
-      system.shutdown
+      system.terminate()
     }
     system
   }

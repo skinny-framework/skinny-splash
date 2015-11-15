@@ -2,9 +2,9 @@
 // common settings
 // -----------------------
 
-lazy val releaseVersion = "1.0.1"
-lazy val skinnyVersion = "1.3.18"
-lazy val jettyVersion = "9.2.10.v20150310"
+lazy val releaseVersion = "1.1.0"
+lazy val skinnyVersion = "1.3.20"
+lazy val jettyVersion = "9.2.14.v20151106"
 lazy val sprayVersion = "1.3.3"
 lazy val skinnyOrg = "org.skinny-framework"
 
@@ -14,7 +14,7 @@ lazy val skinnyDeps = Seq(
   skinnyOrg %% "skinny-validator" % skinnyVersion % "compile"
 )
 lazy val sprayDeps = Seq(
-  "com.typesafe.akka" %% "akka-actor"    % "2.3.11"     % "compile",
+  "com.typesafe.akka" %% "akka-actor"    % "2.4.0"      % "compile",
   "io.spray"          %% "spray-can"     % sprayVersion % "compile",
   "io.spray"          %% "spray-routing" % sprayVersion % "compile",
   "io.spray"          %% "spray-json"    % "1.3.2"      % "compile"
@@ -22,14 +22,14 @@ lazy val sprayDeps = Seq(
 lazy val sprayServletDeps = Seq("io.spray" %% "spray-servlet" % "1.3.2" % "compile")
 lazy val sprayTestDeps = Seq(
   "io.spray"          %% "spray-testkit" % sprayVersion % "test",
-  "org.scalatest"     %% "scalatest"     % "2.2.4"      % "test"
+  "org.scalatest"     %% "scalatest"     % "2.2.5"      % "test"
 )
 
 lazy val logbackDeps = Seq("ch.qos.logback" % "logback-classic" % "1.1.3")
 lazy val logbackTestDeps = Seq("ch.qos.logback" % "logback-classic" % "1.1.3" % "test")
 
 lazy val baseSettings = Seq(
-  scalaVersion := "2.11.6",
+  scalaVersion := "2.11.7",
   transitiveClassifiers in Global := Seq(Artifact.SourceClassifier),
   parallelExecution in Test := false,
   logBuffered in Test := false,
@@ -39,7 +39,7 @@ lazy val baseSettings = Seq(
 lazy val librarySettings = Seq(
   organization := skinnyOrg,
   version := releaseVersion,
-  crossScalaVersions := Seq("2.11.6"),
+  crossScalaVersions := Seq("2.11.7"),
   publishMavenStyle := true,
   pomIncludeRepository := { x => false },
   pomExtra := <url>https://github.com/skinny-framework/skinny-spray/</url>
@@ -88,10 +88,9 @@ lazy val simpleSample = (project in file("samples/simple")).settings(baseSetting
 ).dependsOn(skinnySplash)
  .settings(scalariformSettings: _*)
 
-import org.scalatra.sbt._
 lazy val servletSample = (project in file("samples/servlet"))
   .settings(baseSettings: _*)
-  .settings(ScalatraPlugin.scalatraWithJRebel: _*)
+  .settings(servletSettings: _*)
   .settings(
     libraryDependencies ++= logbackDeps ++ sprayTestDeps ++ Seq(
       skinnyOrg            %% "skinny-framework"  % skinnyVersion,
