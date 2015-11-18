@@ -34,7 +34,7 @@ libraryDependencies ++= Seq(
   "io.spray"             %% "spray-can"     % "1.3.3",
   "io.spray"             %% "spray-routing" % "1.3.3",
   "io.spray"             %% "spray-json"    % "1.3.1",
-  "org.skinny-framework" %% "skinny-splash" % "1.1.+"
+  "org.skinny-framework" %% "skinny-splash" % "2.0.+"
 )
 ```
 
@@ -140,7 +140,7 @@ delete="Delete"
 Additionally, `skinny-splash-servlet` is also required.
 
 ```scala
-libraryDependencies += "org.skinny-framework" %% "skinny-splash-servlet" % "1.1.+"
+libraryDependencies += "org.skinny-framework" %% "skinny-splash-servlet" % "2.0.+"
 ```
 
 #### Example Code
@@ -192,7 +192,7 @@ spray.servlet {
          version="3.0">
 
     <listener>
-        <listener-class>org.scalatra.servlet.ScalatraListener</listener-class>
+        <listener-class>skinny.micro.SkinnyListener</listener-class>
     </listener>
     <listener>
         <listener-class>spray.servlet.Initializer</listener-class>
