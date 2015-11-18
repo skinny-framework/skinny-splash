@@ -1,7 +1,7 @@
 package skinny.splash.controller
 
 import skinny.splash.controller.feature._
-import skinny.util.JSONStringOps
+import skinny.json4s.JSONStringOps
 
 /**
  * Spray Controller
