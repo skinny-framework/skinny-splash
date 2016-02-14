@@ -5,7 +5,8 @@ import skinny.validator._
 
 class SimpleExampleController extends SprayController {
 
-  def echoForm(req: SprayRequest) = validation(req,
+  def echoForm(req: SprayRequest) = validation(
+    req,
     paramKey("str") is required & maxLength(10)
   )
 

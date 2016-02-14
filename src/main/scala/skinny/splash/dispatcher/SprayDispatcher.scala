@@ -66,7 +66,8 @@ trait SprayDispatcher
   protected def createSprayRequest(
     ctx: RequestContext,
     multiParams: Map[String, List[String]],
-    formData: FormData): SprayRequest = {
+    formData: FormData
+  ): SprayRequest = {
     SprayRequest(
       context = ctx,
       queryMultiParams = multiParams.map { case (k, vs) => (k, vs.toSeq) },

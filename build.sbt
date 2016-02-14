@@ -2,9 +2,9 @@
 // common settings
 // -----------------------
 
-lazy val releaseVersion = "2.0.0"
-lazy val skinnyVersion = "2.0.0"
-lazy val jettyVersion = "9.2.14.v20151106"
+lazy val releaseVersion = "2.0.1"
+lazy val skinnyVersion = "2.0.7"
+lazy val jettyVersion = "9.2.15.v20160210"
 lazy val sprayVersion = "1.3.3"
 lazy val skinnyOrg = "org.skinny-framework"
 
@@ -19,14 +19,14 @@ lazy val sprayDeps = Seq(
   "io.spray"          %% "spray-routing" % sprayVersion % "compile",
   "io.spray"          %% "spray-json"    % "1.3.2"      % "compile"
 )
-lazy val sprayServletDeps = Seq("io.spray" %% "spray-servlet" % "1.3.2" % "compile")
+lazy val sprayServletDeps = Seq("io.spray" %% "spray-servlet" % "1.3.3" % "compile")
 lazy val sprayTestDeps = Seq(
   "io.spray"          %% "spray-testkit" % sprayVersion % "test",
-  "org.scalatest"     %% "scalatest"     % "2.2.5"      % "test"
+  "org.scalatest"     %% "scalatest"     % "2.2.6"      % "test"
 )
 
-lazy val logbackDeps = Seq("ch.qos.logback" % "logback-classic" % "1.1.3")
-lazy val logbackTestDeps = Seq("ch.qos.logback" % "logback-classic" % "1.1.3" % "test")
+lazy val logbackDeps = Seq("ch.qos.logback" % "logback-classic" % "1.1.4")
+lazy val logbackTestDeps = Seq("ch.qos.logback" % "logback-classic" % "1.1.4" % "test")
 
 lazy val baseSettings = Seq(
   scalaVersion := "2.11.7",

@@ -13,7 +13,8 @@ import scala.collection.concurrent
 case class SprayRequest(
     context: RequestContext,
     queryMultiParams: Map[String, Seq[String]],
-    formMultiParams: Map[String, Seq[String]]) {
+    formMultiParams: Map[String, Seq[String]]
+) {
 
   lazy val requestScope: concurrent.Map[String, Any] = new concurrent.TrieMap[String, Any]()
 

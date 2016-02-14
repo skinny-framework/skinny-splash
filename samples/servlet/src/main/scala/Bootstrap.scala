@@ -1,7 +1,7 @@
 import _root_.controller._
 import skinny._
 
-class ScalatraBootstrap extends SkinnyLifeCycle {
+class Bootstrap extends SkinnyLifeCycle {
 
   override def dbSettingsEnabled = false
 

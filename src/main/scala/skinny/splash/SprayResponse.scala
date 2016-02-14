@@ -6,7 +6,8 @@ import spray.http.{ Rendering, HttpHeader, StatusCode, StatusCodes }
 case class SprayResponse(
     status: StatusCode = StatusCodes.OK,
     headers: Seq[HttpHeader] = Nil,
-    body: String = null) {
+    body: String = null
+) {
 
   private def buildResponseHeader(name: String, value: String): HttpHeader = {
     val _name = name
