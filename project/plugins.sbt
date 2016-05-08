@@ -10,4 +10,4 @@ addSbtPlugin("org.scoverage"    % "sbt-coveralls"        % "1.0.0")
 // for simpleSample project
 addSbtPlugin("com.eed3si9n"     % "sbt-assembly"         % "0.13.0")
 // for samples/servlet
-addSbtPlugin("org.skinny-framework" % "sbt-servlet-plugin" % "2.0.3")
+addSbtPlugin("org.skinny-framework" % "sbt-servlet-plugin" % "2.0.4")

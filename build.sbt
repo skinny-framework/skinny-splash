@@ -2,9 +2,9 @@
 // common settings
 // -----------------------
 
-lazy val releaseVersion = "2.0.1"
-lazy val skinnyVersion = "2.0.7"
-lazy val jettyVersion = "9.2.15.v20160210"
+lazy val releaseVersion = "2.1.0"
+lazy val skinnyVersion = "2.1.0"
+lazy val jettyVersion = "9.2.16.v20160414"
 lazy val sprayVersion = "1.3.3"
 lazy val skinnyOrg = "org.skinny-framework"
 
@@ -25,11 +25,11 @@ lazy val sprayTestDeps = Seq(
   "org.scalatest"     %% "scalatest"     % "2.2.6"      % "test"
 )
 
-lazy val logbackDeps = Seq("ch.qos.logback" % "logback-classic" % "1.1.4")
-lazy val logbackTestDeps = Seq("ch.qos.logback" % "logback-classic" % "1.1.4" % "test")
+lazy val logbackDeps = Seq("ch.qos.logback" % "logback-classic" % "1.1.7")
+lazy val logbackTestDeps = Seq("ch.qos.logback" % "logback-classic" % "1.1.7" % "test")
 
 lazy val baseSettings = Seq(
-  scalaVersion := "2.11.7",
+  scalaVersion := "2.11.8",
   transitiveClassifiers in Global := Seq(Artifact.SourceClassifier),
   parallelExecution in Test := false,
   logBuffered in Test := false,
@@ -39,7 +39,7 @@ lazy val baseSettings = Seq(
 lazy val librarySettings = Seq(
   organization := skinnyOrg,
   version := releaseVersion,
-  crossScalaVersions := Seq("2.11.7"),
+  crossScalaVersions := Seq("2.11.8"),
   publishMavenStyle := true,
   pomIncludeRepository := { x => false },
   pomExtra := <url>https://github.com/skinny-framework/skinny-spray/</url>
