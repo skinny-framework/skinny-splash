@@ -30,11 +30,11 @@ java -jar samples/simple/target/scala-2.11/simpleSample-assembly-0.1-SNAPSHOT.ja
 ```scala
 scalaVersion := "2.11.7"
 libraryDependencies ++= Seq(
-  "com.typesafe.akka"    %% "akka-actor"    % "2.4.0",
+  "com.typesafe.akka"    %% "akka-actor"    % "2.4.9",
   "io.spray"             %% "spray-can"     % "1.3.3",
   "io.spray"             %% "spray-routing" % "1.3.3",
   "io.spray"             %% "spray-json"    % "1.3.1",
-  "org.skinny-framework" %% "skinny-splash" % "2.0.+"
+  "org.skinny-framework" %% "skinny-splash" % "2.2.+"
 )
 ```
 
